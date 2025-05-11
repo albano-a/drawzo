@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { HStack, Box, Button, IconButton } from "@chakra-ui/react";
 import { MdOutlineCleaningServices } from "react-icons/md";
 import { MdDragIndicator } from "react-icons/md";
@@ -28,8 +28,23 @@ const Toolbar = ({
   });
   const dragging = useRef(false);
   const offset = useRef({ x: 0, y: 0 });
+  const [dragged, setDragged] = useState(false);
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (!dragged) {
+        setPos({
+          x: window.innerWidth / 2,
+          y: window.innerHeight - 100,
+        });
+      }
+    };
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, [dragged]);
 
   const onMouseDown = (e: React.MouseEvent) => {
+    setDragged(true);
     dragging.current = true;
     offset.current = {
       x: e.clientX - pos.x,
@@ -68,6 +83,7 @@ const Toolbar = ({
       height={12}
       px={4}
       py={2}
+      mx={2}
       display="flex"
       alignItems="center"
       gap={3}

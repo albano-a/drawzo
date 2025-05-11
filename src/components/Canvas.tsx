@@ -42,8 +42,8 @@ const Canvas = () => {
   const reset = () => {
     setLines([]);
     setStagePos({
-      x: viewport.width / 2 - WORLD_SIZE / 2,
-      y: viewport.height / 2 - WORLD_SIZE / 2,
+      x: window.innerWidth / 2 - WORLD_SIZE / 2,
+      y: window.innerHeight / 2 - WORLD_SIZE / 2,
     });
     setStageScale(1);
     setTool("brush");
@@ -140,7 +140,7 @@ const Canvas = () => {
   };
 
   return (
-    <Box position="relative" w="full" h="100vh" bg="transparent">
+    <Box position="relative" w="100vw" h="100vh" bg="transparent">
       <Toolbar
         tool={tool}
         setTool={setTool}
